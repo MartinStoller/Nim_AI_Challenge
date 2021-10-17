@@ -16,5 +16,7 @@ def readme():
             "License :: OSI Approved :: MIT License",
             'Programming Language :: Python :: 3.9'
         ],
-        url
+        url =
     )
+
+    https: // github.com / MartinStoller / Nim_AI_Challenge.git
