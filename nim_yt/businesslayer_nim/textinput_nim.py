@@ -18,15 +18,14 @@ def get_line(textinput_line, screen, events, piles, initial_text0, initial_text1
     screen.blit(textinput_line.get_surface(), (690, 25))
     if textinput_line.update(events):
         line_input = textinput_line.get_text()
-
-        if check_validity_line(line_input, piles) is False:
-            text0, text1 = print_message_line(validity=False, line_input=999)
-            return None, text0, text1
-        else:
-            text0, text1 = print_message_line(validity=True, line_input=line_input)
-            return int(line_input), text0, text1
-    else:
-        return None, initial_text0, initial_text1  # if no even was detected, keep the text the way it was
+        if len(str(line_input)) > 0:
+            if check_validity_line(line_input, piles) is False:
+                text0, text1 = print_message_line(validity=False, line_input=999)
+                return None, text0, text1
+            else:
+                text0, text1 = print_message_line(validity=True, line_input=line_input)
+                return int(line_input), text0, text1
+    return None, initial_text0, initial_text1  # if no even was detected, keep the text the way it was
 
 
 def check_validity_line(textinput, piles):
@@ -87,9 +86,7 @@ def get_blocks(textinput_blocks, line, screen, events, piles, initial_text0, ini
                 text0, text1 = print_message_blocks(validity=True, piles=piles, line=line)
                 return int(blocks_input), text0, text1
 
-
     return None, initial_text0, initial_text1
-
 
 
 def print_message_blocks(validity, piles, line):

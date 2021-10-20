@@ -1,4 +1,5 @@
-from nim import train, play
+from nim_yt.businesslayer_nim.nim import train, play
 
-ai = train(10000)
-play(ai, human_player=1)
+def start_game(training_iterations, player):
+    ai = train(training_iterations)
+    play(ai, human_player=player)

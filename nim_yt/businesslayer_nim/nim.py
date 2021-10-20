@@ -235,67 +235,6 @@ def train(n):
     return player
 
 
-def train(n):
-    """
-    Train an AI by playing `n` games against itself.
-    """
-
-    player = NimAI()
-
-    # Play n games
-    for i in range(n):
-        print(f"Playing training game {i + 1}")
-        game = Nim()
-
-        # Keep track of last move made by either player
-        last = {
-            0: {"state": None, "action": None},
-            1: {"state": None, "action": None}
-        }
-
-        # Game loop
-        while True:
-
-            # Keep track of current state and action
-            state = game.piles.copy()
-            action = player.choose_action(game.piles)
-            if i > 9997:
-                print(action)
-                print(state)
-            # Keep track of last state and action
-            last[game.player]["state"] = state
-            last[game.player]["action"] = action
-
-            # Make move
-            game.move(action)
-            new_state = game.piles.copy()
-
-            # When game is over, update Q values with rewards
-            if game.winner is not None:
-                player.update(state, action, new_state, -1)
-                player.update(
-                    last[game.player]["state"],
-                    last[game.player]["action"],
-                    new_state,
-                    1
-                )
-                break
-
-            # If game is continuing, no rewards yet
-            elif last[game.player]["state"] is not None:
-                player.update(
-                    last[game.player]["state"],
-                    last[game.player]["action"],
-                    new_state,
-                    0
-                )
-
-    print("Done training")
-
-    # Return the trained AI
-    return player
-
-
 def play(ai, human_player=None):
     """
     Play human game against the AI.
