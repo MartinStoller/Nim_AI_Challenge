@@ -1,2 +1,4 @@
 test.py
 .gitignore
+/.idea
+/nim_yt

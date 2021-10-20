@@ -1,7 +1,6 @@
 import time
-
 import pygame
-from import *
+from pygame_textinput import *
 import blocks as nim_blocks
 import textinput_nim
 import nim
@@ -99,6 +98,7 @@ def main():
             textsurface[3] = (dynamic_blocks_confirmed_text1, (600, 149))
             if blocks_input is not None:
                 blocks_confirmed = True
+
                 del textinput_blocks
 
         if line_confirmed is True and blocks_confirmed is True:
@@ -110,7 +110,7 @@ def main():
                                          blocks=blocks_input, moves_made=moves_made)
 
             # reset parameters:
-            reset_dynamic_texts(textsurface=textsurface)
+            reset_dynamic_texts(textsurface)
             line_confirmed = False
             blocks_confirmed = False
             textinput_line = TextInput()
