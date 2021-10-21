@@ -1,6 +1,8 @@
 import math
 import random
 import time
+import pygame
+import blocks as nim_blocks
 
 
 class Nim():
@@ -289,3 +291,88 @@ def play(ai, human_player=None):
             winner = "Human" if game.winner == human_player else "AI"
             print(f"Winner is {winner}")
             return
+
+# Helper functions for GUI:
+
+def reset_dynamic_texts(textsurface):
+    SMALL_FONT = pygame.font.SysFont('bahnschrift', 15)
+    empty_text = SMALL_FONT.render("", True, (255, 255, 255))
+    textsurface[0] = (empty_text, (600, 100))
+    textsurface[1] = (empty_text, (600, 114))
+    textsurface[2] = (empty_text, (600, 100))
+    textsurface[3] = (empty_text, (600, 114))
+    return textsurface, empty_text, empty_text
+
+
+def reset_lines_and_blocks():
+    line_confirmed = False
+    blocks_confirmed = False
+    line_input = None
+    blocks_input = None
+    return line_confirmed, blocks_confirmed, line_input, blocks_input
+
+
+def print_last_move(current_game, human_player, textsurface, line, blocks, moves_made):
+    SMALL_FONT = pygame.font.SysFont('bahnschrift', 15)
+    player = "Human" if current_game.player != human_player else "AI"
+    text = SMALL_FONT.render(f"{player} removed {blocks} Blocks from line {line}.", True, (255, 255, 255))
+    textsurface.append((text, (600, (180+moves_made*17))))
+    moves_made += 1
+    return moves_made
+
+
+def print_winner_message(human_player, winner):
+    font = pygame.font.SysFont("bahnschrift", 65)
+    small_font = pygame.font.SysFont("bahnschrift", 20)
+    if human_player == winner:
+        text = font.render("Congratulations, Human! You are the superior being!", True, (0, 0, 0))
+    else:
+        text = font.render("Muhahaha! You lost, Human! The reign of AI over humanity has begun!", True, (0, 0, 0))
+    text2 = small_font.render("Press any key to get back to the menu.")
+    return text, text2
+
+
+def draw_playing_screen(screen, piles, textsurface):
+    BLACK = (0, 0, 0)
+    WHITE = (255, 255, 255)
+    screen.fill(WHITE)
+    pygame.draw.rect(screen, BLACK, (593, 0, 1000, 1000))
+    pygame.draw.rect(screen, WHITE, (850, 55, 50, 35), 2)
+    pygame.draw.rect(screen, WHITE, (675, 18, 50, 35), 2)
+    nim_blocks.drawAllBlocks(screen, piles)
+    for text in textsurface:
+        screen.blit(text[0], text[1])
+
+
+def get_initial_textsurface():
+    SMALL_FONT = pygame.font.SysFont('bahnschrift', 15)
+    FONT = pygame.font.SysFont('bahnschrift', 30)
+    textsurface = []
+    dynamic_line_confirmed_text0 = SMALL_FONT.render("", True, (255, 255, 255))
+    dynamic_line_confirmed_text1 = SMALL_FONT.render("", True, (255, 255, 255))
+    dynamic_blocks_confirmed_text0 = SMALL_FONT.render("", True, (255, 255, 255))
+    dynamic_blocks_confirmed_text1 = SMALL_FONT.render("", True, (255, 255, 255))
+    textsurface.append((dynamic_line_confirmed_text0, (600, 100)))  # dynamic texts need to be at index 0-3!!!
+    textsurface.append((dynamic_line_confirmed_text1, (600, 114)))
+    textsurface.append((dynamic_blocks_confirmed_text0, (600, 135)))
+    textsurface.append((dynamic_blocks_confirmed_text1, (600, 149)))
+
+    text0 = FONT.render('How many blocks do you want to', True, (0, 0, 0))
+    text1 = FONT.render('remove and from which Line?', True, (0, 0, 0))
+    text2 = FONT.render("Line:", True, (255, 255, 255))
+    text3 = FONT.render("Amount of blocks:", True, (255, 255, 255))
+    text4 = SMALL_FONT.render("L0", True, (0, 0, 0))
+    text5 = SMALL_FONT.render("L1", True, (0, 0, 0))
+    text6 = SMALL_FONT.render("L2", True, (0, 0, 0))
+    text7 = SMALL_FONT.render("L3", True, (0, 0, 0))
+
+    textsurface.append((text0, (80, 20)))
+    textsurface.append((text1, (80, 55)))
+    textsurface.append((text2, (600, 20)))
+    textsurface.append((text3, (600, 55)))
+    textsurface.append((text4, (243, 372)))
+    textsurface.append((text5, (168, 452)))
+    textsurface.append((text6, (85, 532)))
+    textsurface.append((text7, (5, 612)))
+
+    return textsurface
