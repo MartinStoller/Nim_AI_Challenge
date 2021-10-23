@@ -200,9 +200,9 @@ def train(n):
             # Keep track of current state and action
             state = game.piles.copy()
             action = player.choose_action(game.piles)
-            if i > 9997:
-                print(action)
-                print(state)
+            # if i > 9997:
+            #     print(action)
+            #     print(state)
             # Keep track of last state and action
             last[game.player]["state"] = state
             last[game.player]["action"] = action
@@ -322,13 +322,13 @@ def print_last_move(current_game, human_player, textsurface, line, blocks, moves
 
 
 def print_winner_message(human_player, winner):
-    font = pygame.font.SysFont("bahnschrift", 65)
-    small_font = pygame.font.SysFont("bahnschrift", 20)
+    font = pygame.font.SysFont("bahnschrift", 30)
+    small_font = pygame.font.SysFont("bahnschrift", 15)
     if human_player == winner:
         text = font.render("Congratulations, Human! You are the superior being!", True, (0, 0, 0))
     else:
         text = font.render("Muhahaha! You lost, Human! The reign of AI over humanity has begun!", True, (0, 0, 0))
-    text2 = small_font.render("Press any key to get back to the menu.")
+    text2 = small_font.render("Press any key to get back to the menu.", True, (0, 0, 0))
     return text, text2
 
 
