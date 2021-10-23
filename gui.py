@@ -11,14 +11,14 @@ from Button import Button
 
 #TODO: and show loading screen while A.I is training. different blocks at each difficulty
 
-def run_playingscreen(training_games, SCREEN, clock):
+def run_playingscreen(training_games, SCREEN, clock, faces):
     # SET INITIAL PARAMETERS:
     FPS = 30
     click_sound = pygame.mixer.Sound("pics_and_music/click_sound.wav")
     SMALL_FONT = pygame.font.SysFont('bahnschrift', 15)
     current_game = nim.Nim()
     human_player = random.randint(0, 1)
-    ai = nim.train(training_games)  # TODO: Show some sort of "Training AI Loading Screen"
+    ai = nim.train(training_games, SCREEN=SCREEN, clock=clock)  # TODO: Show some sort of "Training AI Loading Screen"
     moves_made = 0  # counter for how many moves were executed so far (important for print_last_move())
     dynamic_line_confirmed_text0 = SMALL_FONT.render("", True, (255, 255, 255))
     dynamic_line_confirmed_text1 = SMALL_FONT.render("", True, (255, 255, 255))
@@ -34,7 +34,7 @@ def run_playingscreen(training_games, SCREEN, clock):
     # Draw first frame of playing screen:
     piles = current_game.piles
     textsurface = nim.get_initial_textsurface()
-    nim.draw_playing_screen(screen=SCREEN, piles=piles, textsurface=textsurface)
+    nim.draw_playing_screen(screen=SCREEN, piles=piles, textsurface=textsurface, faces=faces)
 
     pygame.display.update()
     time.sleep(1)
@@ -103,7 +103,7 @@ def run_playingscreen(training_games, SCREEN, clock):
             # draw blocks and blit text:
             for text in textsurface:
                 SCREEN.blit(text[0], text[1])
-            nim_blocks.drawAllBlocks(SCREEN, current_game.piles)
+            nim_blocks.drawAllBlocks(SCREEN, current_game.piles, faces=faces)
 
             pygame.display.update()
             clock.tick(FPS)
@@ -140,11 +140,11 @@ def run_menu_screen(clock, SCREEN):
     pygame.display.set_caption("Marty´s Coding Palace: Nim Challenge")
     header_font = pygame.font.SysFont('bahnschrift', 55)
     button100 = Button("Baby A.I.", "(Learns from 100 games against itself)",
-                       300, 120, (640, 100), screen=SCREEN, training_iterations=100, clock=clock, elevation=6)
+                       300, 120, (640, 100), screen=SCREEN, training_iterations=100, clock=clock, elevation=6, faces=0)
     button1k = Button("Normal A.I.", "(Learns from 1k games against itself)",
-                       300, 120, (640, 300), screen=SCREEN, training_iterations=1000, clock=clock, elevation=6)
+                       300, 120, (640, 300), screen=SCREEN, training_iterations=1000, clock=clock, elevation=6, faces=1)
     button10k = Button("Marty´s Super A.I. 5000", "(Learns from 10k games against itself)",
-                      300, 120, (640, 500), screen=SCREEN, training_iterations=10_000, clock=clock, elevation=6)
+                      300, 120, (640, 500), screen=SCREEN, training_iterations=10_000, clock=clock, elevation=6, faces=2)
     while True:
         SCREEN.fill((255, 255, 255))
         pygame.draw.rect(SCREEN, (0, 0, 0), (593, 0, 1000, 1000))

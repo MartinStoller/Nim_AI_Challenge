@@ -1,6 +1,8 @@
 from pygame_textinput import *
 
 BLOCKSIZE = 60
+face_pic = pygame.image.load("pics_and_music/marty_face.png")
+woody_pic = pygame.image.load("pics_and_music/woody.png")
 
 class Block:
     def __init__(self, id, colour, position, size):
@@ -13,10 +15,11 @@ class Block:
         pygame.draw.rect(screen, self.colour, (self.position[0], self.position[1], self.size, self.size))
 
 
-def drawAllBlocks(screen, piles):
+def drawAllBlocks(screen, piles, faces):
     """
     :param screen: =SCREEN
     :param piles: vgl Nim class: Piles is an Array [nr_blocks(line1), nr_blocks(line2), ..., nr_blocks(line4)
+    :param piles: if 0, show woody pic, if 1 show no pic, if 2 show marty pic
     :return: nothing
 
     takes the amount of blocks per line from piles and creates block objects with desired coordinates accordingly
@@ -47,3 +50,7 @@ def drawAllBlocks(screen, piles):
     block_list = itertools.chain(blocks_line1, blocks_line2, blocks_line3, blocks_line4)
     for block in block_list:
         block.render(screen)
+        if faces == 2:
+            screen.blit(face_pic, pygame.rect.Rect(block.position[0]+15, block.position[1]+10, 30, 30))
+        elif faces == 0:
+            screen.blit(woody_pic, pygame.rect.Rect(block.position[0] + 15, block.position[1] + 10, 30, 30))

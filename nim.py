@@ -176,12 +176,15 @@ class NimAI():
             return random.choice(tuple(Nim.available_actions(piles=state)))
 
 
-def train(n):
+def train(n, SCREEN, clock):
     """
     Train an AI by playing `n` games against itself.
     """
 
     player = NimAI()
+    font = pygame.font.SysFont("bahnschrift", 40)
+    FPS = 12_0000
+    clock = clock
 
     # Play n games
     for i in range(n):
@@ -230,6 +233,15 @@ def train(n):
                     new_state,
                     0
                 )
+
+            text0 = font.render("AI learns by playing against itself:", True, (255, 255, 255))
+            text1 = font.render(f"Game {i + 1} / {n}", True, (255, 255, 255))
+            SCREEN.fill((0, 0, 0))
+            SCREEN.blit(text0, (100, 100))
+            SCREEN.blit(text1, (100, 300))
+
+            pygame.display.update()
+            clock.tick(FPS)
 
     print("Done training")
 
@@ -332,14 +344,14 @@ def print_winner_message(human_player, winner):
     return text, text2
 
 
-def draw_playing_screen(screen, piles, textsurface):
+def draw_playing_screen(screen, piles, textsurface, faces):
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
     screen.fill(WHITE)
     pygame.draw.rect(screen, BLACK, (593, 0, 1000, 1000))
     pygame.draw.rect(screen, WHITE, (850, 55, 50, 35), 2)
     pygame.draw.rect(screen, WHITE, (675, 18, 50, 35), 2)
-    nim_blocks.drawAllBlocks(screen, piles)
+    nim_blocks.drawAllBlocks(screen, piles, faces=faces)
     for text in textsurface:
         screen.blit(text[0], text[1])
 

@@ -5,9 +5,10 @@ import time
 
 
 class Button:
-    def __init__(self, text0, text1, width, height, position, screen, training_iterations, clock, elevation):
+    def __init__(self, text0, text1, width, height, position, screen, training_iterations, clock, elevation, faces):
         # Core attributes
         self.pressed = False
+        self.faces = faces  # which face pictures should be shown on top of Blocks
         self.elevation = elevation
         self.dynamic_elevation = elevation
         self.original_y_pos = position[1]
@@ -56,7 +57,8 @@ class Button:
                 self.dynamic_elevation = self.elevation
                 if self.pressed is True:
                     self.pressed = False
-                    gui.run_playingscreen(self.training_iterations, SCREEN=self.screen, clock=self.clock)
+                    gui.run_playingscreen(self.training_iterations, SCREEN=self.screen,
+                                          clock=self.clock, faces=self.faces)
         else:
             self.dynamic_elevation = self.elevation
             self.top_color = "#475F77"
