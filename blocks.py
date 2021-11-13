@@ -1,8 +1,24 @@
 from pygame_textinput import *
 
 BLOCKSIZE = 60
-face_pic = pygame.image.load("pics_and_music/marty_face.png")
-woody_pic = pygame.image.load("pics_and_music/woody.png")
+
+
+def get_img_loc(filename):
+    url = os.getcwd()
+    dir = "pics_and_music"
+    url = os.path.join(url, dir)
+    return os.path.join(url, filename)
+
+
+face_pic_url = get_img_loc("marty_face.png")
+face_pic = pygame.image.load(face_pic_url)
+
+woody_pic_url = get_img_loc("woody.png")
+woody_pic = pygame.image.load(woody_pic_url)
+
+sheep_pic_url = get_img_loc("sheep.png")
+sheep_pic = pygame.image.load(sheep_pic_url)
+
 
 class Block:
     def __init__(self, id, colour, position, size):
@@ -52,5 +68,7 @@ def drawAllBlocks(screen, piles, faces):
         block.render(screen)
         if faces == 2:
             screen.blit(face_pic, pygame.rect.Rect(block.position[0]+15, block.position[1]+10, 30, 30))
-        elif faces == 0:
+        elif faces == 1:
             screen.blit(woody_pic, pygame.rect.Rect(block.position[0] + 15, block.position[1] + 10, 30, 30))
+        elif faces == 0:
+            screen.blit(sheep_pic, pygame.rect.Rect(block.position[0] + 15, block.position[1] + 10, 30, 30))

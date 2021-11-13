@@ -3,6 +3,7 @@ import random
 import time
 import pygame
 import blocks as nim_blocks
+import pickle
 
 
 class Nim():
@@ -188,7 +189,7 @@ def train(n, SCREEN, clock):
 
     # Play n games
     for i in range(n):
-        print(f"Playing training game {i + 1}")
+        #(f"Playing training game {i + 1}")
         game = Nim()
 
         # Keep track of last move made by either player
@@ -373,10 +374,10 @@ def get_initial_textsurface():
     text1 = FONT.render('remove and from which Line?', True, (0, 0, 0))
     text2 = FONT.render("Line:", True, (255, 255, 255))
     text3 = FONT.render("Amount of blocks:", True, (255, 255, 255))
-    text4 = SMALL_FONT.render("L0", True, (0, 0, 0))
-    text5 = SMALL_FONT.render("L1", True, (0, 0, 0))
-    text6 = SMALL_FONT.render("L2", True, (0, 0, 0))
-    text7 = SMALL_FONT.render("L3", True, (0, 0, 0))
+    text4 = SMALL_FONT.render("L1", True, (0, 0, 0))
+    text5 = SMALL_FONT.render("L2", True, (0, 0, 0))
+    text6 = SMALL_FONT.render("L3", True, (0, 0, 0))
+    text7 = SMALL_FONT.render("L4", True, (0, 0, 0))
 
     textsurface.append((text0, (80, 20)))
     textsurface.append((text1, (80, 55)))

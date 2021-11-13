@@ -7,18 +7,50 @@ import nim
 import play
 import random
 import sys
+import os
 from Button import Button
+import pickle
 
-#TODO: and show loading screen while A.I is training. different blocks at each difficulty
+
+def load_obj(name ):
+    with open(name + '.pkl', 'rb') as f:
+        return pickle.load(f)
+
+
+def show_10k_loading_screen(SCREEN, FONT):
+    pygame.draw.rect(SCREEN, (0, 0, 0), (0, 0, 1000, 1000))
+    text0 = FONT.render("For time reasons this A.I. is pretrained. Loading A.I. ...", True, (255, 255, 255))
+    SCREEN.blit(text0, (40, 100))
+    pygame.display.update()
+    time.sleep(3)
+
 
 def run_playingscreen(training_games, SCREEN, clock, faces):
     # SET INITIAL PARAMETERS:
     FPS = 30
-    click_sound = pygame.mixer.Sound("pics_and_music/click_sound.wav")
+
+    url = os.getcwd()
+    dir = "pics_and_music"
+    file = "click_sound.wav"
+    url = os.path.join(url, dir)
+    click_sound_url = os.path.join(url, file)
+    click_sound = pygame.mixer.Sound(click_sound_url)
+
     SMALL_FONT = pygame.font.SysFont('bahnschrift', 15)
+    FONT = pygame.font.SysFont('bahnschrift', 30)
     current_game = nim.Nim()
     human_player = random.randint(0, 1)
-    ai = nim.train(training_games, SCREEN=SCREEN, clock=clock)  # TODO: Show some sort of "Training AI Loading Screen"
+    if training_games > 9999:
+        ai = load_obj("10k")
+        show_10k_loading_screen(SCREEN, FONT)
+    else:
+        ai = nim.train(training_games, SCREEN=SCREEN, clock=clock)  # TODO: Show some sort of "Training AI Loading Screen"
+
+    # Store Ai after training to avoid having to retrain it over and over again:
+    # if training_games > 9999:
+    #     with open("10k.pkl", 'wb') as pickle_file:
+    #         pickle.dump(ai, pickle_file)
+
     moves_made = 0  # counter for how many moves were executed so far (important for print_last_move())
     dynamic_line_confirmed_text0 = SMALL_FONT.render("", True, (255, 255, 255))
     dynamic_line_confirmed_text1 = SMALL_FONT.render("", True, (255, 255, 255))
@@ -153,7 +185,8 @@ def run_menu_screen(clock, SCREEN):
         button1k.draw()
         button10k.draw()
 
-        nick_marty_img = pygame.image.load("pics_and_music/nick_n_marty_full_no_white_edges.png")
+        nick_marty_img_url = nim_blocks.get_img_loc("nick_n_marty_full_no_white_edges.png")
+        nick_marty_img = pygame.image.load(nick_marty_img_url)
 
         textsurface = []
         text0 = FONT.render("Please choose your opponent:", True, (0, 0, 115))
@@ -174,6 +207,11 @@ def run_menu_screen(clock, SCREEN):
         clock.tick(FPS)
 
 
+
+
+
+
+
 if __name__ == "__main__":
     pygame.font.init()
     pygame.mixer.init()
@@ -184,7 +222,12 @@ if __name__ == "__main__":
     FPS = 30
     clock = pygame.time.Clock()
 
-    click_sound = pygame.mixer.Sound("pics_and_music/click_sound.wav")
+    url = os.getcwd()
+    dir = "pics_and_music"
+    file = "click_sound.wav"
+    url = os.path.join(url, dir)
+    click_sound_url = os.path.join(url, file)
+    click_sound = pygame.mixer.Sound(click_sound_url)
 
     FONT = pygame.font.SysFont('bahnschrift', 30)
     SMALL_FONT = pygame.font.SysFont('bahnschrift', 15)

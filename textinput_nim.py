@@ -24,8 +24,8 @@ def get_line(textinput_line, screen, events, piles, initial_text0, initial_text1
                 return None, text0, text1
             else:
                 text0, text1 = print_message_line(validity=True, line_input=line_input)
-                return int(line_input), text0, text1
-    return None, initial_text0, initial_text1  # if no even was detected, keep the text the way it was
+                return int(line_input)-1, text0, text1
+    return None, initial_text0, initial_text1  # if no event was detected, keep the text the way it was
 
 
 def check_validity_line(textinput, piles):
@@ -43,7 +43,7 @@ def check_validity_line(textinput, piles):
     valid_inputs = []
     for e in enumerate(piles):
         if e[1] != 0:
-            valid_inputs.append(e[0])
+            valid_inputs.append(e[0]+1)
 
     if textinput not in valid_inputs:
         return False
@@ -54,8 +54,8 @@ def print_message_line(validity, line_input):
     """ returns text objects which gets added to the text surface in the main() in GUI"""
     FONT = pygame.font.SysFont('bahnschrift', 15)
     if validity is False:
-        text0 = FONT.render("Invalid Input! Please choose a line (0-3), ", True, (255, 255, 255))
-        text1 = FONT.render("which contains at least one Block.", True, (255, 255, 255))
+        text0 = FONT.render("Invalid Input! Please choose a line (1-4), ", True, (255, 0, 0))
+        text1 = FONT.render("which contains at least one Block.", True, (255, 0, 0))
     else:
         text0 = FONT.render("How many Blocks would you like to ", True, (255, 255, 255))
         text1 = FONT.render("remove from line " + str(line_input) + "?", True, (255, 255, 255))
@@ -92,9 +92,9 @@ def get_blocks(textinput_blocks, line, screen, events, piles, initial_text0, ini
 def print_message_blocks(validity, piles, line):
     FONT = pygame.font.SysFont('bahnschrift', 15)
     if validity is False:
-        text0 = FONT.render("Invalid Input! Line " + str(line) + " contains " + str(piles[line]) + " Blocks.",
-                            True, (255, 255, 255))
-        text1 = FONT.render("Please choose a number between 1 and " + str(piles[line]), True, (255, 255, 255))
+        text0 = FONT.render("Invalid Input! Line " + str(line+1) + " contains " + str(piles[line]) + " Blocks.",
+                            True, (255, 0, 0))
+        text1 = FONT.render("Please choose a number between 1 and " + str(piles[line]), True, (255, 0, 0))
     else:
         text0 = FONT.render("", True, (255, 255, 255))
         text1 = FONT.render("", True, (255, 255, 255))
