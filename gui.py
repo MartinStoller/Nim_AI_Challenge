@@ -38,6 +38,7 @@ def run_playingscreen(training_games, SCREEN, clock, faces):
 
     SMALL_FONT = pygame.font.SysFont('bahnschrift', 15)
     FONT = pygame.font.SysFont('bahnschrift', 30)
+
     current_game = nim.Nim()
     human_player = random.randint(0, 1)
     if training_games > 9999:
