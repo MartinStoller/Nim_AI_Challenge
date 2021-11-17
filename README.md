@@ -1,3 +1,6 @@
+# Nim Challenge:
+
+
 This is a Q-learning based A.I. which plays the game of Nim.
 
 I briefly summarize this project on youtube: https://www.youtube.com/watch?v=b5JMfz7Cezk
