@@ -215,6 +215,7 @@ def run_menu_screen(clock, SCREEN):
 
 if __name__ == "__main__":
     pygame.font.init()
+    pygame.font.init()
     pygame.mixer.init()
     WIDTH, HEIGHT = 960, 720
     SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -234,9 +235,5 @@ if __name__ == "__main__":
     SMALL_FONT = pygame.font.SysFont('bahnschrift', 15)
 
     run_menu_screen(clock=clock, SCREEN=SCREEN)
-    pygame.init()
-    pygame.font.init()
-    pygame.mixer.init()
-    clock = pygame.time.Clock()
-    main()
+
     pygame.quit()
